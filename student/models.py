@@ -26,6 +26,7 @@ class Intention(models.Model):
     salesperson = models.CharField(max_length=20, verbose_name="销售员")
     input_person = models.CharField(max_length=20, verbose_name="入库员")
     maintain = models.CharField(max_length=20, verbose_name="维护员")
+    "竞赛意向", "曾经参加竞赛", "",
 
 
 class Audition(models.Model):

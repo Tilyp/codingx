@@ -1,3 +1,18 @@
 .idea/*
 *.pyc
 codingXWeb/node_modules/*
+.DS_Store
+
+codingXWeb/dist/*
+codingXWeb/package*
+codingXWeb/npm-debug.log*
+codingXWeb/yarn-debug.log*
+codingXWeb/yarn-error.log*
+
+# Editor directories and files
+.idea/*
+.vscode/*
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
