@@ -7,14 +7,14 @@ Vue.use(Router);
 export default new Router({
   routes: [
       {
-        path: '/h',
+        path: '/',
         name: 'HelloWorld',
         component: HelloWorld
       },
-      // {
-      //       path: '/login',
-      //       component: resolve => require(['../page/login.vue'], resolve)
-      //   },
+      {
+            path: '/login',
+            component: resolve => require(['../components/login.vue'], resolve)
+        },
       {
           path: '/404',
           component: resolve => require(['../demo/404.vue'], resolve)

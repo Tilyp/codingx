@@ -2,29 +2,54 @@ export default {
 
     data() {
         return {
-            msg: '移动互联网数据采集平台',
+            msg: '蔻丁侠后台管理系统',
             ruleForm: {
                 userName: '', //用户名
                 password: '',  //密码
                 email: '',
             },
+            rules: {
+                    userName: [
+                        { required: true, message: '请输入用户名', trigger: 'blur' }
+                    ],
+                    password: [
+                        { required: true, message: '请输入密码', trigger: 'blur' }
+                    ],
+                    email: [
+                        { required: true, message: '请输入邮箱', trigger: 'blur' }
+                    ]
+            },
             chioce: true,
-            usererror: "",
-            passerror: "",
-            emailerorr: ""
+
         };
     },
 
     methods: {
+        submitForm(formName) {
+                let _this = this;
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        _this.$login(
+                            _this.UIFormData(this.ruleForm),
+                            function (data) {
+                                sessionStorage.setItem("user",JSON.stringify(data));
+                                sessionStorage.setItem("token",data.token);
+                                sessionStorage.setItem("permissions",JSON.stringify(data.permissions));
+                                _this.$router.push('/');
+                            }, function (response) {
+                                _this.notifyMessage('登录失败', response.data.message, 'error', '3000');
+                            });
+                    } else {
+                        return false;
+                    }
+                })
+        },
         chioces(){
             if(this.chioce){
                  this.chioce = false
             }else{
                  this.chioce = true
             }
-            this.usererror = "";
-            this.passerror = "";
-            this.emailerorr = ""
         },
         login() {
             const username = this.ruleForm.userName;
@@ -63,17 +88,7 @@ export default {
             });
         },
         register(){
-             const username = this.ruleForm.userName;
-             const password = this.ruleForm.password;
-             const email = this.ruleForm.email;
-             if (username == ""){
-                 this.usererror = "帐号不能为空！";
-                 return
-             }
-             if (password == ""){
-                 this.passerror = "密码不能为空！";
-                 return
-             }
+             checkemail(this.ruleForm.email)
              if (email == ""){
                  this.emailerorr = "邮箱不能为空！";
                  return
@@ -131,16 +146,14 @@ export default {
         checkpassword(){
             const password = this.ruleForm.password;
             const regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,30}');
-            if (password == ""){
-                this.passerror = "密码不能为空 ！"
-            }else if (!regex.test(password)){
+            if (!regex.test(password)){
                 this.passerror = "密码中必须包含字母、数字、特称字符，至少8个字符，最多30个字符。"
             }else{
                 this.passerror = ""
             }
         },
-        checkemail(){
-            const email = this.ruleForm.email;
+
+        checkemail(email){
             const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if (email == "") {
                 this.emailerorr = "邮箱不能为空！"
