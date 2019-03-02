@@ -19,10 +19,10 @@
          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm loginFrom">
              <h1 style="font-size: 1.2rem; color: #fff;font-weight: bold;padding: 1rem 0;">用户登陆</h1>
              <el-form-item prop="userName">
-                <el-input placeholder="账号"  v-model="userName"></el-input>
+                <el-input placeholder="账号"  v-model="ruleForm.userName"></el-input>
              </el-form-item>
              <el-form-item prop="password">
-                <el-input  type="password"  v-model="password" placeholder="密码"></el-input>
+                <el-input  type="password"  v-model="ruleForm.password" placeholder="密码"></el-input>
               </el-form-item>
              <div class="login-btn">
                     <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
@@ -33,17 +33,17 @@
          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm loginFrom">
              <h1 style="font-size: 1.2rem; color: #fff;font-weight: bold;padding: 1rem 0;">用户登陆</h1>
              <el-form-item prop="userName">
-                <el-input placeholder="账号"  v-model="userName"></el-input>
+                <el-input placeholder="账号"  v-model="ruleForm.userName"></el-input>
              </el-form-item>
              <el-form-item prop="password">
-                <el-input  type="password"  v-model="password" placeholder="密码"></el-input>
+                <el-input  type="password"  v-model="ruleForm.password" placeholder="密码"></el-input>
               </el-form-item>
 
              <el-form-item prop="email">
-              <el-input  v-model="email" placeholder="邮箱"></el-input>
+              <el-input  v-model="ruleForm.email" placeholder="邮箱"></el-input>
            </el-form-item>
            <div class="login-btn">
-                    <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+                    <el-button type="primary" @click="register_admin('ruleForm')">注册</el-button>
              </div>
           </el-form>
           </div>

@@ -9,14 +9,17 @@ import 'element-ui/lib/theme-chalk/index.css';
 import common from './assets/js/common';
 import serviceUtil from './assets/js/XTServiceUtils';
 
+
+Vue.prototype.$axios = axios;
+axios.defaults.baseURL = 'http://localhost:8000';
+// axios.defaults.headers.common['token'] = "f4c902c9ae5a2a9d8f84868ad064e706"
+// axios.defaults.headers.post["Content-type"] = "application/json"
+// axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
+
 Vue.config.productionTip = false;
 Vue.use(ElementUI, {size: 'small'});
 Vue.use(common);
 Vue.use(serviceUtil);
-
-
-Vue.prototype.$axios = axios;
-axios.defaults.baseURL = 'http://localhost:8000';
 
 
 router.beforeEach((to, from, next) => {

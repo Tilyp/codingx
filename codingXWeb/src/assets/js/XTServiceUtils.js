@@ -5,12 +5,31 @@ var install = function (Vue) {
         //登录
         $login: {
             value: function (params, success, fail) {
-                this.UIAxios("/sys/login", {
+                this.UIAxios("/student/admin_login", {
                     method: "post",
                     data: params
                 }, success, fail);
             }
         },
+        $registerAdmin: {
+            value: function (params, success, fail) {
+                this.UIAxios("/student/register_admin", {
+                    method: "post",
+                    data: params
+                }, success, fail);
+            }
+        },
+
+        $checkAdmin: {
+            value: function (params, success, fail) {
+                console.log(params);
+                this.UIAxios("/student/check_admin_user", {
+                    method: "post",
+                    data: params
+                }, success, fail);
+            }
+        },
+
         //枚举选项获取
         $enumOption: {
             value: function(params,success,fail){

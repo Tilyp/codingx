@@ -3,6 +3,15 @@ from django.db import models
 
 # Create your models here.
 
+
+class AdminUser(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, verbose_name="主键")
+    username = models.CharField(max_length=50, verbose_name="用户名")
+    password = models.CharField(max_length=50, verbose_name="密码")
+    email = models.CharField(max_length=50, verbose_name="邮箱")
+    status = models.CharField(max_length=10, default="1", verbose_name="状态")
+
+
 class Intention(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, verbose_name="主键")
     parent_mame = models.CharField(max_length=20, verbose_name="家长姓名")

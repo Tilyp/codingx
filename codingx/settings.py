@@ -25,7 +25,6 @@ SECRET_KEY = '#248!kxmvos_mth2)8bp)znvjpgkh3&)1%xif6g86@emt9_q7m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -37,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'student',
+
 ]
 
 MIDDLEWARE = [
@@ -124,7 +125,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+ALLOWED_HOSTS = ['*']
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
