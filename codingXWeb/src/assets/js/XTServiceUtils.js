@@ -13,6 +13,7 @@ var install = function (Vue) {
         },
         $registerAdmin: {
             value: function (params, success, fail) {
+                console.log(params);
                 this.UIAxios("/student/register_admin", {
                     method: "post",
                     data: params
@@ -22,12 +23,11 @@ var install = function (Vue) {
 
         $checkAdmin: {
             value: function (params, success, fail) {
-                console.log(params);
                 this.UIAxios("/student/check_admin_user", {
                     method: "post",
                     data: params
                 }, success, fail);
-            }
+            },
         },
 
         //枚举选项获取

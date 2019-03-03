@@ -46,7 +46,7 @@ export default {
                 if (isSuccess(res)) {
                     callback(res.data.data);
                 } else {
-                    error(res.data.message)
+                    error(res.data.data)
                 }
             }).catch(function (res) {
                 if (!config.hideLoading) {

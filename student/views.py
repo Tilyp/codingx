@@ -2,6 +2,7 @@
 
 from django.shortcuts import render
 from django.http import JsonResponse
+import uuid
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -20,15 +21,35 @@ def register_admin(request):
             email=email,
             status="2"
         )
-        return JsonResponse({"message": "success", "data": ""}, status=200)
+        return JsonResponse(data={"code": "0", "data": {"flag": True, "message": "success"}}, status=200)
 
 # @csrf_exempt
 def check_admin_user(request):
-    if request.method == "OPTIONS":
-        username = request.POST.get("userName")
+    if request.method == "POST":
+        username = request.POST.get("username")
         try:
             AdminUser.objects.get(username=username)
+            message = "用户名已经存在，请重新输入！！！"
             data = False
         except Exception as e:
+            message = ""
             data = True
-        return JsonResponse({"message": "success", "data": data}, status=200)
+        return JsonResponse(data={"code": "0", "data": {"flag": data,
+          "username": username, "message": message}}, status=200)
+
+
+def admin_login(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        token = str(uuid.uuid4())
+        try:
+            querydata = AdminUser.objects.get(username=username, password=password)
+            request.session['token'] = token
+            code = "0"
+            message = "登陆成功！"
+        except:
+            code = "1"
+            message = "用户名或密码错误 ！！！"
+        return JsonResponse(data={"code": code, "data": {"name": username,
+            "message": message, "token": token}}, status=200)

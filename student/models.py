@@ -28,6 +28,7 @@ class Intention(models.Model):
     student_qq = models.CharField(max_length=20, verbose_name="学生QQ")
     student_wechat = models.CharField(max_length=20, verbose_name="学生微信")
     hobby = models.CharField(max_length=200, verbose_name="学生爱好")
+    speciality = models.CharField(max_length=200, verbose_name="学生特长")
     coach = models.CharField(max_length=200, verbose_name="已报辅导班")
     intention_class = models.CharField(max_length=50, verbose_name="意向课程")
     status = models.CharField(max_length=10, default="1", verbose_name="课程标识符：1，代表预留信息；\
@@ -35,7 +36,9 @@ class Intention(models.Model):
     salesperson = models.CharField(max_length=20, verbose_name="销售员")
     input_person = models.CharField(max_length=20, verbose_name="入库员")
     maintain = models.CharField(max_length=20, verbose_name="维护员")
-    "竞赛意向", "曾经参加竞赛", "",
+    competition = models.CharField(max_length=200, verbose_name="竞赛意向")
+    once_competition = models.CharField(max_length=200, verbose_name="曾经参加竞赛")
+
 
 
 class Audition(models.Model):

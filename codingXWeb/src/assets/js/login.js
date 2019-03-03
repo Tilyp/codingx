@@ -1,24 +1,69 @@
 export default {
     data() {
+        var checkuser = (rules, value, callback) => {
+            if (!value) {
+                return callback(new Error('用户名不能为空'));
+            }else {
+                let _this = this;
+                 const fromdata = {
+                    username: value,
+                 };
+                 setTimeout(() => {
+                      _this.$checkAdmin(
+                            _this.UIFormData(fromdata),
+                           function (data) {
+                               if(!data.flag){
+                                   _this.$refs['ruserNameInput'].focus()
+                                   return callback(new Error(data.message));
+                               }
+                               callback();
+                           }, function (response) {
+                               _this.$refs['ruserNameInput'].focus()
+                               return callback(new Error("未知错误，稍后重试！！！"));
+                      });
+                 }, 2000)
+            }
+        };
+
         return {
             msg: '蔻丁侠后台管理系统',
             ruleForm: {
                 userName: '', //用户名
+                username: '',
                 password: '',  //密码
                 email: '',
             },
+            loginForm:{
+                username: '',
+                password: '',  //密码
+            },
+
             rules: {
                     userName: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' }
+                        { required: true, message: '请输入用户名', trigger: 'blur' },
+                        { min: 5, max: 20, message: '长度在 5 到 20 个字符', trigger: 'blur'},
+                        { pattern: /^[A-Za-z0-9]+$/, message: '用户名只能为字母和数字', trigger: 'blur'},
+                        {validator: checkuser, trigger: 'blur'},
+                    ],
+                    username: [
+                        { required: true, message: '请输入用户名', trigger: 'blur' },
+                        { min: 5, max: 20, message: '长度在 5 到 20 个字符', trigger: 'blur'},
+                        { pattern: /^[A-Za-z0-9]+$/, message: '用户名只能为字母和数字', trigger: 'blur'},
                     ],
                     password: [
-                        { required: true, message: '请输入密码', trigger: 'blur' }
+                        { required: true, message: '请输入密码', trigger: 'blur' },
+                        { min: 6, max: 25,  message: '长度在 6 到 25 个字符', trigger: 'blur'},
+                        { pattern: '(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{6,25}', trigger: 'blur',
+                          message: '密码中必须包含字母、数字、特称字符，至少6个字符，最多25个字符。'},
                     ],
                     email: [
-                        { required: true, message: '请输入邮箱', trigger: 'blur' }
+                        { required: true, message: '请输入邮箱', trigger: 'blur' },
+                        { pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                          message: '邮箱格式不正确，请重新出入！', trigger: 'blur'},
                     ]
             },
             chioce: true,
+            userFlag: false,
 
         };
     },
@@ -29,39 +74,41 @@ export default {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         _this.$login(
-                            _this.UIFormData(this.ruleForm),
+                            _this.UIFormData(_this.loginForm),
                             function (data) {
-                                sessionStorage.setItem("user",JSON.stringify(data));
+                                sessionStorage.setItem("user",data.name);
                                 sessionStorage.setItem("token",data.token);
                                 sessionStorage.setItem("permissions",JSON.stringify(data.permissions));
                                 _this.$router.push('/');
                             }, function (response) {
-                                _this.notifyMessage('登录失败', response.data.message, 'error', '3000');
+                                _this.notifyMessage('登录失败', response.message, 'error', '3000');
                             });
                     } else {
                         return false;
                     }
                 })
         },
+
         register_admin(formName){
             let _this = this;
-                const flag = this.checkemail(this.ruleForm);
+                const flag = this.checkemail(_this.ruleForm);
                 if (!flag){
                     return
                 }
+
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         _this.$registerAdmin(
-                            _this.UIFormData(this.ruleForm),
+                            _this.UIFormData(_this.ruleForm),
                             function (data) {
-                                this.$message({
+                                _this.$message({
                                     message: "注册成功！",
-                                    type: 'warning',
+                                    type: 'success',
 
                                 });
-                                this.chioce = true;
+                                _this.chioce = true;
                             }, function (response) {
-                                _this.notifyMessage('用户名验证失败', response.data.message, 'error', '3000');
+                                _this.notifyMessage('注册失败', response.data.message, 'error', '3000');
                             });
                     } else {
                         return false;
@@ -75,65 +122,18 @@ export default {
                  this.chioce = true
             }
         },
-        checkuser(username){
-            if(username.length > 20 ){
-                this.$message({
-                    message: "账号长度不能超过20！",
-                    type: 'error'
-                });
-                return false
-            }else{
-                let _this = this;
-                const fromdata = {
-                    username: username,
-                };
-                _this.$checkAdmin(fromdata,
-                    function (data) {
-                        if(!data.data){
-                            _this.$message({
-                                message: data.msg,
-                                type: 'warning',
-                            });
-                            return false
-                        }
-                        return true
-                    }, function (response) {
-                        _this.$message({
-                            message: response.msg,
-                            type: 'warning',
-                        });
-                        return false
-                });
-            }
-        },
-        checkpassword(password){
-            const regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,30}');
-            if (!regex.test(password)){
-                this.$message({
-                    message: '密码中必须包含字母、数字、特称字符，至少8个字符，最多30个字符。',
-                    type: 'error'
-                });
-                return false
-            }else{
-                return true
-            }
-        },
 
         checkemail(ruleForm){
-            const userFlag= this.checkuser(ruleForm.userName);
-            if (!userFlag){
+            if (ruleForm.userName === ""){
+                this.$refs['ruserNameInput'].focus()
                 return false
             }
-            const pwFlag = this.checkpassword(ruleForm.password);
-            if(!pwFlag){
+            if (ruleForm.password === "") {
+                this.$refs["rpasswordInput"].focus()
                 return false
             }
-            const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            if(!regex.test(ruleForm.email)){
-                this.$message({
-                    message: '请输入合法的邮箱格式！',
-                    type: 'error'
-                });
+            if(ruleForm.email === ""){
+                this.$refs["remailInput"].focus()
                 return false
             }else{
                 return true
