@@ -1,15 +1,15 @@
 <template>
   <el-container>
-    <el-header direction="vertical">
+    <el-header direction="vertical" style="background-color: coral">
         <img src="../assets/img/logo.jpg" class="logo" >
        <div class="head_msg" >
          <b>{{ msg }}</b>
       </div>
       <div class= "login_ico" v-if="chioce==true">
-        <el-button class="logout" size="small" type="danger" @click="chioces()">用户注册</el-button>
+        <el-button class="logout" size="small" type="success" @click="chioces()">用户注册</el-button>
       </div>
       <div class= "login_ico" v-if="chioce==false">
-        <el-button class="logout" size="small" type="danger" @click="chioces()">用户登录</el-button>
+        <el-button class="logout" size="small" type="success" @click="chioces()">用户登录</el-button>
       </div>
     </el-header>
     <el-container>
