@@ -10,10 +10,12 @@
   margin-left:50px;
   font-size: 18px;
   /*color: #d85030;*/
+  top: 3px;
+  position: absolute;
 }
 .login_ico{
   right: 80px;
-  top:8px;
+  top:3px;
   position: absolute;
 }
 
@@ -21,7 +23,7 @@
   width: 30px;
   height: 30px;
   left: 40px;
-  top: 22px;
+  top: 18px;
   position: absolute;
 }
 

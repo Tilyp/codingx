@@ -1,26 +1,26 @@
 <template>
    <el-container >
-    <el-header direction="vertical" style="background-color: coral">
+    <el-header direction="vertical" height="50px" style="background-color: rgba(5, 140, 52, 0.75)">
         <img src="../assets/img/logo.jpg" class="logo" >
        <div class="head_msg" >
          <b>{{ msg }}</b>
       </div>
       <div class= "login_ico">
         <b>Hi {{ username }}! </b>
-        <el-button class="logout" size="small" type="info" v-on:click="logout()" round>Logout</el-button>
+        <el-button class="logout" size="small" type="danger" v-on:click="logout()" round>Logout</el-button>
       </div>
     </el-header>
-     <el-container style="height: 500px; border: 1px solid #eee">
-  <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-    <el-menu :default-openeds="['1', '3']"
+     <el-container >
+    <el-aside width="200px" height="500px" style="background-color: rgb(238, 241, 246)">
+    <el-menu
         background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b">
+        text-color="#fff"
+        active-text-color="#ffd04b">
       <el-submenu index="1">
         <template slot="title"><i class="el-icon-message"></i>客户信息管理</template>
         <el-submenu index="1-1">
           <template slot="title">意向客户</template>
-          <el-menu-item index="1-1-1">添加客户</el-menu-item>
+          <el-menu-item index="1-1-1" @click="chice('addcustomer')" >添加客户</el-menu-item>
           <el-menu-item index="1-2-1">处理信息</el-menu-item>
         </el-submenu>
       </el-submenu>
@@ -56,34 +56,123 @@
       </el-submenu>
     </el-menu>
   </el-aside>
+    <el-container >
+    <el-main style="text-align: right;  font-size: 12px; background-color: rgba(35, 168, 225, 0.49)">
+      <el-row>
+        <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
+    </el-row>
+      <div style="display: flex; margin-top: 5px; height: 500px;">
+      <transition name="el-fade-in-linear ">
+        <div v-if ="show === 'addcustomer'" class="transition-box">
+          <el-form :label-position="right" :inline="true" ref="form" :model="sizeForm" label-width="80px" size="mini">
+            <el-form-item label="家长姓名">
+              <el-input  v-model="sizeForm.parent_mame" placeholder="家长姓名"></el-input>
+            </el-form-item>
+            <el-form-item label="与家长关系">
+              <el-select v-model="sizeForm.relation" placeholder="请选择">
+                <el-option label="父亲" value="父亲"></el-option>
+                <el-option label="母亲" value="母亲"></el-option>
+                <el-option label="爷爷" value="爷爷"></el-option>
+                <el-option label="奶奶" value="奶奶"></el-option>
+                <el-option label="舅舅" value="舅舅"></el-option>
+                <el-option label="叔叔" value="叔叔"></el-option>
+                <el-option label="其他" value="其他"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="家长电话">
+              <el-input  v-model="sizeForm.parent_phone" placeholder="家长电话"></el-input>
+            </el-form-item>
+            <el-form-item label="家长职业">
+              <el-input  v-model="sizeForm.occupation" placeholder="家长职业"></el-input>
+            </el-form-item>
+            <el-form-item label="家长微信">
+              <el-input  v-model="sizeForm.parent_wechat" placeholder="家长微信"></el-input>
+            </el-form-item>
+            <el-form-item label="家长QQ">
+              <el-input  v-model="sizeForm.parent_qq" placeholder="家长QQ"></el-input>
+            </el-form-item>
+            <el-form-item label="家庭住址">
+              <el-input  v-model="sizeForm.address" placeholder="家庭住址"></el-input>
+            </el-form-item>
+            <el-form-item label="学生姓名">
+              <el-input  v-model="sizeForm.student_name" placeholder="学生姓名"></el-input>
+            </el-form-item>
+            <el-form-item label="学生性别">
+              <el-input  v-model="sizeForm.student_gender" placeholder="学生性别"></el-input>
+            </el-form-item>
+            <el-form-item label="学生年龄">
+              <el-input  v-model="sizeForm.student_age" placeholder="学生年龄"></el-input>
+            </el-form-item>
+            <el-form-item label="学生生日">
+              <el-input  v-model="sizeForm.birthday" placeholder="学生生日"></el-input>
+            </el-form-item>
+            <el-form-item label="学生班级">
+              <el-input  v-model="sizeForm.student_grade" placeholder="学生班级"></el-input>
+            </el-form-item>
+            <el-form-item label="学生电话">
+              <el-input  v-model="sizeForm.student_phone" placeholder="学生电话"></el-input>
+            </el-form-item>
+            <el-form-item label="所在学校">
+              <el-input  v-model="sizeForm.school" placeholder="所在学校" ></el-input>
+            </el-form-item>
 
-  <el-container>
-    <el-header style="text-align: right;  font-size: 12px; background-color: #00a854">
-      <el-dropdown>
-        <i class="el-icon-setting" style="margin-right: 15px"></i>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>查看</el-dropdown-item>
-          <el-dropdown-item>新增</el-dropdown-item>
-          <el-dropdown-item>删除</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-      <span>王小虎</span>
-    </el-header>
-
-    <el-main>
-      <el-table :data="tableData">
-        <el-table-column prop="date" label="日期" width="140">
-        </el-table-column>
-        <el-table-column prop="name" label="姓名" width="120">
-        </el-table-column>
-        <el-table-column prop="address" label="地址">
-        </el-table-column>
-      </el-table>
+            <el-form-item label="学生QQ">
+              <el-input  v-model="sizeForm.student_qq" placeholder="学生QQ" ></el-input>
+            </el-form-item>
+            <el-form-item label="学生微信">
+              <el-input  v-model="sizeForm.student_wechat" placeholder="学生微信"></el-input>
+            </el-form-item>
+            <el-form-item label="学生爱好">
+              <el-input  v-model="sizeForm.hobby" placeholder="学生爱好" ></el-input>
+            </el-form-item>
+            <el-form-item label="学生特长">
+              <el-input  v-model="sizeForm.speciality" placeholder="学生特长" ></el-input>
+            </el-form-item>
+            <el-form-item label="竞赛意向">
+              <el-input  v-model="sizeForm.competition" placeholder="竞赛意向" ></el-input>
+            </el-form-item>
+            <el-form-item label="曾经赛事">
+              <el-input  v-model="sizeForm.once_competition" placeholder="曾经赛事" ></el-input>
+            </el-form-item>
+            <el-form-item label="意向课程">
+              <el-input  v-model="sizeForm.intention_class" placeholder="意向课程"></el-input>
+            </el-form-item>
+            <el-form-item label="已报辅导班">
+              <el-input  v-model="sizeForm.coach" placeholder="已报辅导班" ></el-input>
+            </el-form-item>
+            <el-form-item label="客户状态">
+              <el-input  v-model="sizeForm.status" placeholder="客户状态"></el-input>
+            </el-form-item>
+            <el-form-item label="销售员">
+              <el-input  v-model="sizeForm.salesperson" placeholder="销售员"></el-input>
+            </el-form-item>
+            <el-form-item label="入库员">
+              <el-input  v-model="sizeForm.input_person" placeholder="入库员"></el-input>
+            </el-form-item>
+            <el-form-item label="维护员">
+              <el-input  v-model="sizeForm.maintain" placeholder="维护员" ></el-input>
+            </el-form-item>
+            <el-form-item label="登记时间">
+              <el-col :span="11">
+                <el-date-picker type="date" placeholder="选择日期" v-model="sizeForm.record_time.date1" style="width: 100%;"></el-date-picker>
+              </el-col>
+              <el-col class="line" :span="2">-</el-col>
+              <el-col :span="11">
+                <el-time-picker type="fixed-time" placeholder="选择时间" v-model="sizeForm.record_time.date2" style="width: 100%;"></el-time-picker>
+              </el-col>
+            </el-form-item>
+            <el-form-item size="large">
+              <el-button type="primary" @click="onSubmit">立即创建</el-button>
+              <el-button>取消</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+      </transition>
+    </div>
     </el-main>
-  </el-container>
-</el-container>
     </el-container>
-
+   </el-container>
+   </el-container>
 </template>
 
 <script>
@@ -91,8 +180,39 @@ export default {
     name: 'home',
     data () {
         return {
-          msg: '蔻丁侠后台管理系统',
-          username: window.sessionStorage.getItem("user")
+            show: "",
+            msg: '蔻丁侠后台管理系统',
+            username: window.sessionStorage.getItem("user"),
+            sizeForm: {
+                parent_mame: '',
+                relation: '',
+                parent_phone: '',
+                occupation: '',
+                parent_qq: '',
+                parent_wechat: '',
+                address: '',
+                school: '',
+                student_name: '',
+                student_grade: '',
+                birthday: '',
+                student_age: '',
+                student_phone: '',
+                student_qq: '',
+                student_wechat: '',
+                competition: '',
+                once_competition: '',
+                hobby: '',
+                speciality: '',
+                coach: '',
+                intention_class: '',
+                record_time: {"date1": '', "date2": ""},
+                create_time: {"date1": '', "date2": ""},
+                status: '',
+                salesperson: '',
+                input_person: '',
+                maintain: '',
+            }
+
         }
     },
     methods: {
@@ -101,6 +221,12 @@ export default {
              window.sessionStorage.removeItem("permissions");
              window.sessionStorage.removeItem("user");
              this.$router.push({path: '/login'})
+        },
+        chice(flag){
+            this.show = flag
+        },
+        onSubmit() {
+            console.log('submit!');
         }
     }
 }
@@ -112,13 +238,16 @@ export default {
         width: 30px;
         height: 30px;
         left: 40px;
-        top: 22px;
+        top: 18px;
         position: absolute;
     }
     .head_msg{
+        top: 3px;
+        position: absolute;
         float:left;
         margin-left:50px;
         font-size: 18px;
+        font-family: "Adobe 仿宋 Std R";
         /*color: #d85030;*/
     }
     .el-header {
@@ -130,7 +259,36 @@ export default {
 
     .login_ico{
         right: 80px;
-        top:8px;
+        top:3px;
+
         position: absolute;
     }
+    .transition-box {
+        margin-bottom: 10px;
+        width: 800px;
+        height: 500px;
+        border-radius: 4px;
+        background-color: #409EFF;
+        text-align: center;
+        color: #fff;
+        padding: 20px 10px;
+        box-sizing: border-box;
+        margin-right: 20px;
+  }
+  .el-row {
+    // margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
 </style>

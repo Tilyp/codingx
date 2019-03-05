@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-header direction="vertical" style="background-color: coral">
+    <el-header direction="vertical" height="50px" style="background-color: coral">
         <img src="../assets/img/logo.jpg" class="logo" >
        <div class="head_msg" >
          <b>{{ msg }}</b>
