@@ -30,6 +30,16 @@ var install = function (Vue) {
             },
         },
 
+        $addCustomer: {
+            value: function (params, success, fail) {
+                this.UIAxios("/student/addCustomer", {
+                    method: "post",
+                    data: params
+                }, success, fail);
+            }
+        },
+
+
         //枚举选项获取
         $enumOption: {
             value: function(params,success,fail){

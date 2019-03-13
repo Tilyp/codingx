@@ -10,8 +10,8 @@
         <el-button class="logout" size="small" type="danger" v-on:click="logout()" round>Logout</el-button>
       </div>
     </el-header>
-     <el-container >
-    <el-aside width="200px" height="500px" style="background-color: rgb(238, 241, 246)">
+     <el-container  >
+    <el-aside width="200px" style="background-color: rgb(238, 241, 246); min-height:500px">
     <el-menu
         background-color="#545c64"
         text-color="#fff"
@@ -61,7 +61,7 @@
       <el-row>
         <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
     </el-row>
-      <div style="display: flex; margin-top: 5px; height: 500px;">
+      <div style="display: flex; margin-top: 5px; min-height: 500px;">
       <transition name="el-fade-in-linear ">
         <div v-if ="show === 'addcustomer'" class="transition-box">
           <el-form :label-position="right" :inline="true" ref="form" :model="sizeForm" label-width="80px" size="mini">
@@ -115,7 +115,6 @@
             <el-form-item label="所在学校">
               <el-input  v-model="sizeForm.school" placeholder="所在学校" ></el-input>
             </el-form-item>
-
             <el-form-item label="学生QQ">
               <el-input  v-model="sizeForm.student_qq" placeholder="学生QQ" ></el-input>
             </el-form-item>
@@ -149,10 +148,10 @@
             <el-form-item label="入库员">
               <el-input  v-model="sizeForm.input_person" placeholder="入库员"></el-input>
             </el-form-item>
-            <el-form-item label="维护员">
+            <el-form-item label="维护员" >
               <el-input  v-model="sizeForm.maintain" placeholder="维护员" ></el-input>
             </el-form-item>
-            <el-form-item label="登记时间">
+            <el-form-item label="登记时间" >
               <el-col :span="11">
                 <el-date-picker type="date" placeholder="选择日期" v-model="sizeForm.record_time.date1" style="width: 100%;"></el-date-picker>
               </el-col>
@@ -161,8 +160,9 @@
                 <el-time-picker type="fixed-time" placeholder="选择时间" v-model="sizeForm.record_time.date2" style="width: 100%;"></el-time-picker>
               </el-col>
             </el-form-item>
+            <br>
             <el-form-item size="large">
-              <el-button type="primary" @click="onSubmit">立即创建</el-button>
+              <el-button type="primary" @click="onSubmit(sizeForm)">立即创建</el-button>
               <el-button>取消</el-button>
             </el-form-item>
           </el-form>
@@ -193,6 +193,7 @@ export default {
                 address: '',
                 school: '',
                 student_name: '',
+                student_gender: '',
                 student_grade: '',
                 birthday: '',
                 student_age: '',
@@ -205,8 +206,7 @@ export default {
                 speciality: '',
                 coach: '',
                 intention_class: '',
-                record_time: {"date1": '', "date2": ""},
-                create_time: {"date1": '', "date2": ""},
+                record_time: {"date1": '', "date2": ''},
                 status: '',
                 salesperson: '',
                 input_person: '',
@@ -225,8 +225,26 @@ export default {
         chice(flag){
             this.show = flag
         },
-        onSubmit() {
-            console.log('submit!');
+        onSubmit(formData) {
+            formData["record_time"] = formData["record_time"]["date1"] + " " + formData["record_time"]["date2"]
+            let _this = this;
+            _this.$addCustomer(
+                _this.UIFormData(formData),
+                function (data) {
+                    _this.$message({
+                        message: "添加成功！",
+                        type: 'success',
+
+                    });
+                    _this.$router.push('/');
+                }, function (response) {
+                     _this.$message({
+                        message: "添加失败！",
+                        type: 'error',
+
+                    });
+                });
+
         }
     }
 }
@@ -266,7 +284,6 @@ export default {
     .transition-box {
         margin-bottom: 10px;
         width: 800px;
-        height: 500px;
         border-radius: 4px;
         background-color: #409EFF;
         text-align: center;

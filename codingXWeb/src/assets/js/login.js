@@ -13,7 +13,7 @@ export default {
                             _this.UIFormData(fromdata),
                            function (data) {
                                if(!data.flag){
-                                   _this.$refs['ruserNameInput'].focus()
+                                   _this.$refs['ruserNameInput'].focus();
                                    return callback(new Error(data.message));
                                }
                                callback();

@@ -1,12 +1,9 @@
 #! -*- coding: utf-8 -*-
 
-from django.shortcuts import render
-from django.http import JsonResponse
 import uuid
-from django.views.decorators.csrf import csrf_exempt
-
-# Create your views here.
-from student.models import AdminUser
+import json
+from django.http import JsonResponse
+from student.models import AdminUser, Intention
 
 
 # @csrf_exempt
@@ -53,3 +50,9 @@ def admin_login(request):
             message = "用户名或密码错误 ！！！"
         return JsonResponse(data={"code": code, "data": {"name": username,
             "message": message, "token": token}}, status=200)
+
+def addCustomer(request):
+    if request.method == "POST":
+        data = json.loads(request.POST)
+        Intention.objects.create(**data)
+    return JsonResponse(data={"code": "0", "data": {"message": ""}}, status=200)

@@ -58,6 +58,7 @@ export default {
 
         Vue.prototype.UIFormData = function (params) {
             var formData = new FormData();
+            console.log(formData);
             for (var key in params) {
                 formData.append(key, params[key] == null ? "" : params[key]);
             }
