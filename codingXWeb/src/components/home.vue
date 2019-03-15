@@ -64,11 +64,11 @@
       <div style="display: flex; margin-top: 5px; min-height: 500px;">
       <transition name="el-fade-in-linear ">
         <div v-if ="show === 'addcustomer'" class="transition-box">
-          <el-form :label-position="right" :inline="true" ref="form" :model="sizeForm" label-width="80px" size="mini">
+          <el-form :label-position="labelPosition" :inline="true" ref="form" :model="sizeForm" label-width="80px" size="mini">
             <el-form-item label="家长姓名">
               <el-input  v-model="sizeForm.parent_mame" placeholder="家长姓名"></el-input>
             </el-form-item>
-            <el-form-item label="与家长关系">
+            <el-form-item label="关系">
               <el-select v-model="sizeForm.relation" placeholder="请选择">
                 <el-option label="父亲" value="父亲"></el-option>
                 <el-option label="母亲" value="母亲"></el-option>
@@ -136,7 +136,7 @@
             <el-form-item label="意向课程">
               <el-input  v-model="sizeForm.intention_class" placeholder="意向课程"></el-input>
             </el-form-item>
-            <el-form-item label="已报辅导班">
+            <el-form-item label="辅导班">
               <el-input  v-model="sizeForm.coach" placeholder="已报辅导班" ></el-input>
             </el-form-item>
             <el-form-item label="客户状态">
@@ -183,6 +183,7 @@ export default {
             show: "",
             msg: '蔻丁侠后台管理系统',
             username: window.sessionStorage.getItem("user"),
+            labelPosition: 'left',
             sizeForm: {
                 parent_mame: '',
                 relation: '',

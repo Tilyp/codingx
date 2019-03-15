@@ -53,6 +53,7 @@ def admin_login(request):
 
 def addCustomer(request):
     if request.method == "POST":
-        data = json.loads(request.POST)
+        data = request.POST.dict()
+        del data["token"]
         Intention.objects.create(**data)
     return JsonResponse(data={"code": "0", "data": {"message": ""}}, status=200)
