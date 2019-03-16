@@ -46,6 +46,11 @@ class Intention(models.Model):
     input_person = models.CharField(max_length=20, verbose_name="入库员")
     maintain = models.CharField(max_length=20, verbose_name="维护员")
 
+    class Meta:
+        ordering = ['id']
+
+
+
 
 
 class Audition(models.Model):

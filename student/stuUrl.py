@@ -2,7 +2,7 @@
 
 from django.conf.urls import url
 
-from student.views import check_admin_user, register_admin, admin_login, addCustomer
+from student.views import check_admin_user, register_admin, admin_login, addCustomer, showCustomer
 
 app_name = '[student]'
 
@@ -11,4 +11,5 @@ urlpatterns = [
     url(r"^register_admin", register_admin, name="register_admin"),
     url(r"^admin_login", admin_login, name="admin_login"),
     url(r"^addCustomer", addCustomer, name="addCustomer"),
+    url(r"^showCustomer", showCustomer, name="showCustomer"),
 ]

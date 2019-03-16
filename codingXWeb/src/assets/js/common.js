@@ -58,7 +58,6 @@ export default {
 
         Vue.prototype.UIFormData = function (params) {
             var formData = new FormData();
-            console.log(formData);
             for (var key in params) {
                 formData.append(key, params[key] == null ? "" : params[key]);
             }
@@ -95,6 +94,23 @@ export default {
             s = s > 9 ? s : "0" + s;
             return date.getFullYear() + "-" + m + "-" + d + " " + h + ":" + M + ":" + s;
         };
+
+        Vue.prototype.formatterDateDetail = function (timestamp, timestamp1) {
+            var date = new Date(timestamp);
+            var date1 = new Date(timestamp1);
+            var m = date.getMonth() + 1;
+            m = m > 9 ? m : "0" + m;
+            var d = date.getDate();
+            d = d > 9 ? d : "0" + d;
+            var h = date1.getHours();
+            h = h > 9 ? h : "0" + h;
+            var M = date1.getMinutes();
+            M = M > 9 ? M : "0" + M;
+            var s = date1.getSeconds();
+            s = s > 9 ? s : "0" + s;
+            return date.getFullYear() + "-" + m + "-" + d + " " + h + ":" + M + ":" + s;
+        };
+
 
         Vue.prototype.copyObject = function (obj) {
             return JSON.parse(JSON.stringify(obj));

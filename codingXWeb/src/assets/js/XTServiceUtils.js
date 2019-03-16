@@ -29,7 +29,6 @@ var install = function (Vue) {
                 }, success, fail);
             },
         },
-
         $addCustomer: {
             value: function (params, success, fail) {
                 this.UIAxios("/student/addCustomer", {
@@ -38,6 +37,16 @@ var install = function (Vue) {
                 }, success, fail);
             }
         },
+
+        $showCustomer:{
+            value: function (params, success, fail) {
+                this.UIAxios("/student/showCustomer", {
+                    method: "get",
+                    params: this.UISearchParam(params)
+                }, success, fail);
+            }
+        },
+
 
 
         //枚举选项获取

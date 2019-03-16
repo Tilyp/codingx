@@ -21,7 +21,7 @@
         <el-submenu index="1-1">
           <template slot="title">意向客户</template>
           <el-menu-item index="1-1-1" @click="chice('addcustomer')" >添加客户</el-menu-item>
-          <el-menu-item index="1-2-1">处理信息</el-menu-item>
+          <el-menu-item index="1-2-1" @click="chice('showcustomer')" >处理信息</el-menu-item>
         </el-submenu>
       </el-submenu>
       <el-submenu index="2">
@@ -153,11 +153,11 @@
             </el-form-item>
             <el-form-item label="登记时间" >
               <el-col :span="11">
-                <el-date-picker type="date" placeholder="选择日期" v-model="sizeForm.record_time.date1" style="width: 100%;"></el-date-picker>
+                <el-date-picker type="date" placeholder="选择日期" v-model="sizeForm.record_date.date1" style="width: 100%;"></el-date-picker>
               </el-col>
               <el-col class="line" :span="2">-</el-col>
               <el-col :span="11">
-                <el-time-picker type="fixed-time" placeholder="选择时间" v-model="sizeForm.record_time.date2" style="width: 100%;"></el-time-picker>
+                <el-time-picker type="fixed-time" placeholder="选择时间" v-model="sizeForm.record_date.date2" style="width: 100%;"></el-time-picker>
               </el-col>
             </el-form-item>
             <br>
@@ -167,6 +167,28 @@
             </el-form-item>
           </el-form>
         </div>
+         <div v-if ="show === 'showcustomer'" class="transition-box">
+            <el-table
+              :data="customer"
+              height="250"
+              border
+              style="width: 100%">
+              <el-table-column
+                prop="parent_mame"
+                label="家长姓名"
+                width="180">
+              </el-table-column>
+              <el-table-column
+                prop="relation"
+                label="与家长关系"
+                width="180">
+              </el-table-column>
+              <el-table-column
+                prop="parent_phone"
+                label="家长电话">
+              </el-table-column>
+            </el-table>
+         </div>
       </transition>
     </div>
     </el-main>
@@ -207,12 +229,15 @@ export default {
                 speciality: '',
                 coach: '',
                 intention_class: '',
-                record_time: {"date1": '', "date2": ''},
+                record_date: {"date1": '', "date2": ''},
                 status: '',
                 salesperson: '',
                 input_person: '',
                 maintain: '',
-            }
+            },
+            page: 1,
+            customer:{},
+            pageTotal: ''
 
         }
     },
@@ -224,11 +249,37 @@ export default {
              this.$router.push({path: '/login'})
         },
         chice(flag){
+            if (flag === "showcustomer"){
+                this.showCustomer(this.page)
+                this.page = this.page + 1
+            }
             this.show = flag
         },
-        onSubmit(formData) {
-            formData["record_time"] = formData["record_time"]["date1"] + " " + formData["record_time"]["date2"]
+        showCustomer(page) {
             let _this = this;
+            const fromData = {};
+            fromData["page"] = page;
+            _this.$showCustomer(
+                fromData,
+                function (data) {
+                    _this.customer = data["customer"];
+                    console.log(_this.customer);
+                    _this.pageTotal = data["totalPage"]
+                }, function (){
+                    _this.$message({
+                        message: "请求失败！",
+                        type: 'error',
+
+                    });
+                }
+            )
+        },
+        onSubmit(formData) {
+            let _this = this;
+            const record_date = formData["record_date"];
+            const record_time = _this.formatterDateDetail(record_date["date1"], record_date["date2"]);
+            formData["record_time"] = record_time;
+            delete formData["record_date"];
             _this.$addCustomer(
                 _this.UIFormData(formData),
                 function (data) {

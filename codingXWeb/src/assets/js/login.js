@@ -79,6 +79,7 @@ export default {
                                 sessionStorage.setItem("user",data.name);
                                 sessionStorage.setItem("token",data.token);
                                 sessionStorage.setItem("permissions",JSON.stringify(data.permissions));
+                                console.log(data);
                                 _this.$router.push('/');
                             }, function (response) {
                                 _this.notifyMessage('登录失败', response.message, 'error', '3000');

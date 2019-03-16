@@ -1,12 +1,13 @@
 #! -*- coding: utf-8 -*-
 
-import uuid
 import json
+import uuid
+from django.core import serializers
 from django.http import JsonResponse
 from student.models import AdminUser, Intention
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
-# @csrf_exempt
 def register_admin(request):
     if request.method == "POST":
         username = request.POST.get("userName")
@@ -20,7 +21,7 @@ def register_admin(request):
         )
         return JsonResponse(data={"code": "0", "data": {"flag": True, "message": "success"}}, status=200)
 
-# @csrf_exempt
+
 def check_admin_user(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -41,7 +42,7 @@ def admin_login(request):
         password = request.POST.get("password")
         token = str(uuid.uuid4())
         try:
-            querydata = AdminUser.objects.get(username=username, password=password)
+            AdminUser.objects.get(username=username, password=password)
             request.session['token'] = token
             code = "0"
             message = "登陆成功！"
@@ -57,3 +58,24 @@ def addCustomer(request):
         del data["token"]
         Intention.objects.create(**data)
     return JsonResponse(data={"code": "0", "data": {"message": ""}}, status=200)
+
+def showCustomer(requset):
+    if requset.method == "GET":
+        dataList = Intention.objects.all()
+        # data = serializers.serialize("json", dataList)
+        paginator = Paginator(dataList, 3, 2)
+        page = requset.GET.get("page")
+        try:
+            customer = paginator.page(page)
+        except PageNotAnInteger:
+            customer = paginator.page(1)
+        except EmptyPage:
+            customer = paginator.page(paginator.num_pages)
+        total_page = customer.paginator.num_pages
+        data = serializers.serialize("json", customer.object_list)
+        datas = json.loads(data)
+        result = []
+        for data in datas:
+            result.append(data["fields"])
+        return JsonResponse(data={"code": "0", "data": {"message": "",
+                "customer": result, "totalPage": total_page}}, status=200 )
