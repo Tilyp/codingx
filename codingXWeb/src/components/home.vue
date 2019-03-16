@@ -169,25 +169,50 @@
         </div>
          <div v-if ="show === 'showcustomer'" class="transition-box">
             <el-table
-              :data="customer"
-              height="250"
+              :data="tableData"
               border
               style="width: 100%">
               <el-table-column
-                prop="parent_mame"
-                label="家长姓名"
-                width="180">
+                fixed
+                prop="date"
+                label="日期"
+                width="150">
               </el-table-column>
               <el-table-column
-                prop="relation"
-                label="与家长关系"
-                width="180">
+                prop="name"
+                label="姓名"
+                width="120">
               </el-table-column>
               <el-table-column
-                prop="parent_phone"
-                label="家长电话">
+                prop="province"
+                label="省份"
+                width="120">
               </el-table-column>
-            </el-table>
+              <el-table-column
+                prop="city"
+                label="市区"
+                width="120">
+              </el-table-column>
+              <el-table-column
+                prop="address"
+                label="地址"
+                width="300">
+              </el-table-column>
+              <el-table-column
+                prop="zip"
+                label="邮编"
+                width="120">
+              </el-table-column>
+              <el-table-column
+                fixed="right"
+                label="操作"
+                width="100">
+                <template slot-scope="scope">
+                  <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                  <el-button type="text" size="small">编辑</el-button>
+                </template>
+            </el-table-column>
+          </el-table>
          </div>
       </transition>
     </div>
@@ -263,7 +288,6 @@ export default {
                 fromData,
                 function (data) {
                     _this.customer = data["customer"];
-                    console.log(_this.customer);
                     _this.pageTotal = data["totalPage"]
                 }, function (){
                     _this.$message({
