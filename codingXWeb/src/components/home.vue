@@ -169,44 +169,30 @@
         </div>
          <div v-if ="show === 'showcustomer'" class="transition-box">
             <el-table
-              :data="tableData"
+              v-bind:data="customer"
               border
               style="width: 100%">
               <el-table-column
                 fixed
-                prop="date"
-                label="日期"
+                prop="parent_mame"
+                label="家长姓名"
                 width="150">
               </el-table-column>
               <el-table-column
-                prop="name"
-                label="姓名"
+                prop="student_name"
+                label="学生姓名"
                 width="120">
               </el-table-column>
               <el-table-column
-                prop="province"
-                label="省份"
+                prop="intention_class"
+                label="意向课程"
                 width="120">
               </el-table-column>
               <el-table-column
-                prop="city"
-                label="市区"
+                prop="parent_phone"
+                label="家长电话"
                 width="120">
               </el-table-column>
-              <el-table-column
-                prop="address"
-                label="地址"
-                width="300">
-              </el-table-column>
-              <el-table-column
-                prop="zip"
-                label="邮编"
-                width="120">
-              </el-table-column>
-              <el-table-column
-                fixed="right"
-                label="操作"
-                width="100">
                 <template slot-scope="scope">
                   <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
                   <el-button type="text" size="small">编辑</el-button>
@@ -275,8 +261,10 @@ export default {
         },
         chice(flag){
             if (flag === "showcustomer"){
-                this.showCustomer(this.page)
+                this.showCustomer(this.page);
                 this.page = this.page + 1
+                console.log(this.customer)
+                console.log("sdfadfadfasd")
             }
             this.show = flag
         },
@@ -289,7 +277,7 @@ export default {
                 function (data) {
                     _this.customer = data["customer"];
                     _this.pageTotal = data["totalPage"]
-                }, function (){
+                }, function () {
                     _this.$message({
                         message: "请求失败！",
                         type: 'error',
@@ -298,6 +286,7 @@ export default {
                 }
             )
         },
+
         onSubmit(formData) {
             let _this = this;
             const record_date = formData["record_date"];

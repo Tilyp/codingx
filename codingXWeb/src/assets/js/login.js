@@ -10,7 +10,7 @@ export default {
                  };
                  setTimeout(() => {
                       _this.$checkAdmin(
-                            _this.UIFormData(fromdata),
+                           _this.UIFormData(fromdata),
                            function (data) {
                                if(!data.flag){
                                    _this.$refs['ruserNameInput'].focus();
