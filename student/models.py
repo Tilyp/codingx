@@ -48,10 +48,29 @@ class Intention(models.Model):
 
     class Meta:
         ordering = ['id']
-
-
-
+        db_table = "intention"
+        verbose_name = "客户表"
 
 
 class Audition(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, verbose_name="主键")
+    parent_mame = models.CharField(max_length=20, verbose_name="家长姓名")
+    parent_phone = models.CharField(max_length=20, verbose_name="家长电话")
+    student_name = models.CharField(max_length=20, verbose_name="学生姓名")
+    student_phone = models.CharField(max_length=20, verbose_name="学生电话")
+    course = models.CharField(max_length=50, verbose_name="课程")
+    lecturer = models.CharField(max_length=20, verbose_name="讲师")
+    assistant_lecturer = models.CharField(max_length=20, verbose_name="辅助讲师")
+    class_time = models.DateTimeField(null=False, verbose_name='开课时间')
+    salesperson = models.CharField(max_length=20, verbose_name="销售员")
+    status = models.CharField(max_length=10, default="3", verbose_name="客户状态：1，代表预留信息；\
+              2，沟通未报试听课；3，代表已报试听课；4, 试听结束未报课程；5，试听结束已报课程")
+    signUp_time = models.DateTimeField(null=True, default=timezone.now, verbose_name='报名时间')
+
+    class Meta:
+        ordering = ['id']
+        db_table = "audition"
+        verbose_name = "试听课"
+
+class Class(models.Model):
+    pass

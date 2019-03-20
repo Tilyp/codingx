@@ -1,5 +1,5 @@
 from django.contrib import admin
-from student.models import Intention, AdminUser
+from student.models import Intention, Audition
 
 
 class IntentionAdmin(admin.ModelAdmin):
@@ -11,7 +11,16 @@ class IntentionAdmin(admin.ModelAdmin):
 
     list_display = ['id', "parent_mame", 'parent_phone', 'student_name',  'student_phone', 'status']
     search_fields = ['id', "parent_mame", 'student_name', 'parent_phone', 'student_phone']
-    # list_filter = ["push", "error"]
+    list_filter = ["status"]
+
+
+class AuditionAdmin(admin.ModelAdmin):
+    fields = ["id", "parent_mame", "parent_phone", "student_name", "student_phone", "course",
+              "lecturer", "assistant_lecturer", "class_time", "salesperson", "status", "signUp_time"]
+    list_display = ['id', "parent_mame", 'parent_phone', 'student_name', 'student_phone', 'status']
+    search_fields = ['id', "parent_mame", 'student_name', 'parent_phone', 'student_phone']
+    list_filter = ["status"]
 
 
 admin.site.register(Intention, IntentionAdmin)
+admin.site.register(Audition, AuditionAdmin)

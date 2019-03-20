@@ -261,14 +261,15 @@ export default {
         },
         chice(flag){
             if (flag === "showcustomer"){
-                this.showCustomer(this.page);
-                this.page = this.page + 1
-                console.log(this.customer)
-                console.log("sdfadfadfasd")
+                this.showCustomer(this.page,  flag);
+                this.page = this.page + 1;
+
+            }else {
+                this.show = flag
             }
-            this.show = flag
+
         },
-        showCustomer(page) {
+        showCustomer(page, flag) {
             let _this = this;
             const fromData = {};
             fromData["page"] = page;
@@ -276,7 +277,9 @@ export default {
                 fromData,
                 function (data) {
                     _this.customer = data["customer"];
-                    _this.pageTotal = data["totalPage"]
+                    _this.pageTotal = data["totalPage"];
+                    console.log(_this.customer)
+                    _this.show = flag
                 }, function () {
                     _this.$message({
                         message: "请求失败！",

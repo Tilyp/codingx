@@ -62,7 +62,6 @@ def addCustomer(request):
 def showCustomer(requset):
     if requset.method == "GET":
         dataList = Intention.objects.all()
-        # data = serializers.serialize("json", dataList)
         paginator = Paginator(dataList, 3, 2)
         page = requset.GET.get("page")
         try:
@@ -75,13 +74,7 @@ def showCustomer(requset):
         data = serializers.serialize("json", customer.object_list)
         datas = json.loads(data)
         result = []
-        i = 1
-        keys = []
         for data in datas:
             result.append(data["fields"])
-            if i== 1:
-                 keys = data["fields"].keys()
-            i += 1
-        print(keys)
         return JsonResponse(data={"code": "0", "data": {"message": "",
                 "customer": result, "totalPage": total_page}}, status=200 )
