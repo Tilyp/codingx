@@ -21,6 +21,8 @@ class AuditionAdmin(admin.ModelAdmin):
     search_fields = ['id', "parent_mame", 'student_name', 'parent_phone', 'student_phone']
     list_filter = ["status"]
 
+    def save_model(self, request, obj, form, change):
+        super(AuditionAdmin, self).save_model(request, obj, form, change)
 
 admin.site.register(Intention, IntentionAdmin)
 admin.site.register(Audition, AuditionAdmin)
