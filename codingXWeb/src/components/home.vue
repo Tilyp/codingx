@@ -68,7 +68,7 @@
             <el-form-item label="家长姓名">
               <el-input  v-model="sizeForm.parent_mame" placeholder="家长姓名"></el-input>
             </el-form-item>
-            <el-form-item label="关系">
+            <el-form-item label="关    系">
               <el-select v-model="sizeForm.relation" placeholder="请选择">
                 <el-option label="父亲" value="父亲"></el-option>
                 <el-option label="母亲" value="母亲"></el-option>
@@ -115,7 +115,7 @@
             <el-form-item label="所在学校">
               <el-input  v-model="sizeForm.school" placeholder="所在学校" ></el-input>
             </el-form-item>
-            <el-form-item label="学生QQ">
+            <el-form-item label="学生  QQ">
               <el-input  v-model="sizeForm.student_qq" placeholder="学生QQ" ></el-input>
             </el-form-item>
             <el-form-item label="学生微信">
@@ -136,19 +136,19 @@
             <el-form-item label="意向课程">
               <el-input  v-model="sizeForm.intention_class" placeholder="意向课程"></el-input>
             </el-form-item>
-            <el-form-item label="辅导班">
+            <el-form-item label="辅 导 班">
               <el-input  v-model="sizeForm.coach" placeholder="已报辅导班" ></el-input>
             </el-form-item>
             <el-form-item label="客户状态">
               <el-input  v-model="sizeForm.status" placeholder="客户状态"></el-input>
             </el-form-item>
-            <el-form-item label="销售员">
+            <el-form-item label="销 售 员">
               <el-input  v-model="sizeForm.salesperson" placeholder="销售员"></el-input>
             </el-form-item>
-            <el-form-item label="入库员">
+            <el-form-item label="入 库 员">
               <el-input  v-model="sizeForm.input_person" placeholder="入库员"></el-input>
             </el-form-item>
-            <el-form-item label="维护员" >
+            <el-form-item label="维 护 员" >
               <el-input  v-model="sizeForm.maintain" placeholder="维护员" ></el-input>
             </el-form-item>
             <el-form-item label="登记时间" >
@@ -162,43 +162,139 @@
             </el-form-item>
             <br>
             <el-form-item size="large">
-              <el-button type="primary" @click="onSubmit(sizeForm)">立即创建</el-button>
-              <el-button>取消</el-button>
+              <el-button type="success" @click="onSubmit(sizeForm)">立即创建</el-button>
+              <el-button type="danger">取消</el-button>
             </el-form-item>
           </el-form>
         </div>
-         <div v-if ="show === 'showcustomer'" class="transition-box">
-            <el-table
+         <div v-else-if ="show === 'showcustomer'" class="transition-box">
+           <el-table
               v-bind:data="customer"
               border
               style="width: 100%">
-              <el-table-column
-                fixed
-                prop="parent_mame"
-                label="家长姓名"
-                width="150">
-              </el-table-column>
-              <el-table-column
-                prop="student_name"
-                label="学生姓名"
-                width="120">
-              </el-table-column>
-              <el-table-column
-                prop="intention_class"
-                label="意向课程"
-                width="120">
-              </el-table-column>
-              <el-table-column
-                prop="parent_phone"
-                label="家长电话"
-                width="120">
-              </el-table-column>
-                <template slot-scope="scope">
-                  <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                  <el-button type="text" size="small">编辑</el-button>
-                </template>
-            </el-table-column>
-          </el-table>
+           <el-table-column type="expand">
+         <template slot-scope="props">
+           <el-form label-position="left" inline class="demo-table-expand">
+             <el-form-item label="家长姓名">
+              <span>{{ props.row.parent_mame }}</span>
+              </el-form-item>
+              <el-form-item label="关     系">
+                <span>{{ props.row.relation }}</span>
+              </el-form-item>
+              <el-form-item label="家长电话">
+                <span>{{ props.row.parent_phone }}</span>
+              </el-form-item>
+              <el-form-item label="家长职业">
+                <span>{{ props.row.occupation }}</span>
+              </el-form-item>
+              <el-form-item label="家长  QQ">
+                <span>{{ props.row.parent_qq }}</span>
+              </el-form-item>
+              <el-form-item label="家长微信">
+                <span>{{ props.row.parent_wechat }}</span>
+              </el-form-item>
+              <el-form-item label="家庭住址">
+                <span>{{ props.row.address }}</span>
+              </el-form-item>
+              <el-form-item label="所在学校">
+                <span>{{ props.row.school }}</span>
+              </el-form-item>
+              <el-form-item label="学生姓名">
+                <span>{{ props.row.student_name }}</span>
+              </el-form-item>
+              <el-form-item label="学生班级">
+                <span>{{ props.row.student_grade }}</span>
+              </el-form-item>
+              <el-form-item label="学生年龄">
+                <span>{{ props.row.student_age }}</span>
+              </el-form-item>
+              <el-form-item label="学生性别">
+                <span>{{ props.row.student_gender }}</span>
+              </el-form-item>
+              <el-form-item label="学生生日">
+                <span>{{ props.row.birthday }}</span>
+              </el-form-item>
+              <el-form-item label="学生电话">
+                <span>{{ props.row.student_phone }}</span>
+              </el-form-item>
+              <el-form-item label="学生  QQ">
+                <span>{{ props.row.student_qq }}</span>
+              </el-form-item>
+              <el-form-item label="学生微信">
+                <span>{{ props.row.student_wechat }}</span>
+              </el-form-item>
+              <el-form-item label="竞赛意向">
+                <span>{{ props.row.competition }}</span>
+              </el-form-item>
+              <el-form-item label="曾参竞赛">
+                <span>{{ props.row.once_competition }}</span>
+              </el-form-item>
+              <el-form-item label="学生爱好">
+                <span>{{ props.row.hobby }}</span>
+              </el-form-item>
+              <el-form-item label="学生特长">
+                <span>{{ props.row.speciality }}</span>
+              </el-form-item>
+              <el-form-item label="已报辅导班">
+                <span>{{ props.row.coach }}</span>
+              </el-form-item>
+              <el-form-item label="意向课程">
+                <span>{{ props.row.intention_class }}</span>
+              </el-form-item>
+              <el-form-item label="记录日期">
+                <span>{{ props.row.record_time }}</span>
+              </el-form-item>
+              <el-form-item label="建档日期">
+                <span>{{ props.row.create_time }}</span>
+              </el-form-item>
+              <el-form-item label="客户状态">
+                <span>{{ props.row.status }}</span>
+              </el-form-item>
+              <el-form-item label="销 售 员">
+                <span>{{ props.row.salesperson }}</span>
+              </el-form-item>
+              <el-form-item label="入 库 员">
+                <span>{{ props.row.input_person }}</span>
+              </el-form-item>
+              <el-form-item label="维 护 员">
+                <span>{{ props.row.maintain }}</span>
+              </el-form-item>
+           </el-form>
+         </template>
+        </el-table-column>
+        <el-table-column
+          prop="parent_mame"
+          label="家长姓名"
+          width="80">
+        </el-table-column>
+        <el-table-column
+          prop="student_name"
+          label="学生姓名"
+          width="80">
+        </el-table-column>
+        <el-table-column
+          prop="intention_class"
+          label="意向课程"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="parent_phone"
+          label="家长电话"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="student_phone"
+          label="学生电话"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          label="操作"
+          width="">
+          <template slot-scope="scope">
+            <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+          </template>
+      </el-table-column>
+      </el-table>
          </div>
       </transition>
     </div>
@@ -247,7 +343,7 @@ export default {
                 maintain: '',
             },
             page: 1,
-            customer:{},
+            customer:[],
             pageTotal: ''
 
         }
@@ -263,13 +359,13 @@ export default {
             if (flag === "showcustomer"){
                 this.showCustomer(this.page,  flag);
                 this.page = this.page + 1;
-
+                this.show = flag
             }else {
+                console.log(this.customer)
                 this.show = flag
             }
-
         },
-        showCustomer(page, flag) {
+        showCustomer(page) {
             let _this = this;
             const fromData = {};
             fromData["page"] = page;
@@ -278,13 +374,10 @@ export default {
                 function (data) {
                     _this.customer = data["customer"];
                     _this.pageTotal = data["totalPage"];
-                    console.log(_this.customer)
-                    _this.show = flag
                 }, function () {
                     _this.$message({
                         message: "请求失败！",
                         type: 'error',
-
                     });
                 }
             )
@@ -320,6 +413,18 @@ export default {
 
 
 <style scoped>
+    .demo-table-expand {
+        font-size: 0;
+    }
+    .demo-table-expand label {
+        width: 90px;
+        color: #99a9bf;
+    }
+    .demo-table-expand .el-form-item {
+        margin-right: 0;
+        margin-bottom: 0;
+        width: 50%;
+    }
     .logo{
         width: 30px;
         height: 30px;
@@ -351,7 +456,8 @@ export default {
     }
     .transition-box {
         margin-bottom: 10px;
-        width: 800px;
+        width: 100%;
+        height: 100%;
         border-radius: 4px;
         background-color: #409EFF;
         text-align: center;
